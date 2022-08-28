@@ -21,11 +21,54 @@ function addItem(e){
     e.preventDefault();
     const value = grocery.value;
     const id = new Date().getTime().toString(); //using milliseconds as unique id for item
-    if (value !== '' && editFlag === false){}
-    else if (value !== '' && editFlag === true) {}
-    else {
-        
+
+    //value !== '' && editFlag === false
+    if (value && !editFlag){
+        const element = document.createElement('article'); // article because we have article in index.html
+
+        // add class
+        element.classList.add('grocery-item');
+        //add id
+        const attr = document.createAttribute('data-id');
+        attr.value = id;
+        element.setAttributeNode(atrr);
+        element.innerHTML = `<p class="title">${value}</p>
+        <div class="btn-container">
+          <!- - edit btn - ->
+          <button type="button" class="edit-btn">
+            <i class="fas fa-edit"></i>
+          </button>
+          <!- - delete btn - ->
+          <button type="button" class="delete-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>`;
+
+        //append child
+        list.appendChild(element);
+        // display alert
+        displayAlert('item added to the list', 'success');
+        //show conatiner
+        container.classList.add('show-container');
     }
+    else if (value && editFlag) {
+        console.log("editing");
+    }
+    else {
+        displayAlert("Please enter value", 'danger');
+    }
+}
+
+// display alert
+function displayAlert(text,action){
+    alert.textContent = text;
+    alert.classList.add(`alert-${action}`);
+
+    // remove alert
+    setTimeout(function(){
+        alert.textContent = '';
+        alert.classList.remove(`alert-${action}`);
+    }, 1000)
 }
 
 // ****** LOCAL STORAGE *********
